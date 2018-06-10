@@ -1,35 +1,30 @@
 'use strict';
-const emoji = require('node-emoji');
 
-class ArrayEmojify {
-    constructor() { }
+class BoolEmojify {
+    constructor(option) { 
+        this.option = option || {
+            truthy: '👆',
+            falsy: '👇'
+        };
+    }
 
-    isString(val) {
-        return typeof val === 'string';
+    isBoolean(val) {
+        return typeof val === 'boolean';
     }
 
     emojify(data, cb) {
         const payload = {
             error: null,
-            value: []
+            value: null
         };
 
-        if (Array.isArray(data)) {
-            payload.value = data.map(
-                item => this.isString(item) && emoji.hasEmoji(item) ?
-                    (emoji.emojify(item).toString() !== item ?
-                        emoji.emojify(item) : emoji.get(item)) + ' ' : item
-            );
+        if (this.isBoolean(data) && data !== '') {
+            payload.value = data ? this.option.truthy : this.option.falsy;
         } else {
-            if (this.isString(data) && data !== '') {
-                payload.value = emoji.emojify(data).toString() !== data ?
-                    emoji.emojify(data) : emoji.get(data)
+            if(data === '') {
+                payload.error = 'Data is empty';
             } else {
-                if(data === '') {
-                    payload.error = 'String is empty';
-                } else {
-                    payload.error = 'Data is not array type';
-                }
+                payload.error = 'Data is not boolean type';
             }
         }
 
@@ -38,4 +33,4 @@ class ArrayEmojify {
     }
 }
 
-module.exports = Object.assign(new ArrayEmojify(), { ArrayEmojify });
+module.exports = Object.assign(new BoolEmojify(), { BoolEmojify });

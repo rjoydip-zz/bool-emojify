@@ -1,21 +1,32 @@
-# ArrayEmojify [![Build Status](https://travis-ci.org/rjoydip/array-emojify.svg?branch=master)](https://travis-ci.org/rjoydip/array-emojify)
+# BoolEmojify [![Build Status](https://travis-ci.org/rjoydip/bool-emojify.svg?branch=master)](https://travis-ci.org/rjoydip/bool-emojify)
 
-> Emojify array values
+> Emojify boolean values
 
 ## Install
 
 ```bash
-    npm i array-emojify
+    npm i bool-emojify
+```
+
+## Option
+
+```js
+{
+    "truthy": '👆',
+    "falsy": '👇'
+}
 ```
 
 ## Usage
 
 ```js
-const { ArrayEmojify } = require('array-emojify');
+const { BoolEmojify } = require('bool-emojify');
 
-const arrayEmojify = new ArrayEmojify();
-const firstEmojify = arrayEmojify.emojify(['100', 'coffee', 'heart', ':+1:'], (value) => { /* TODO: value */ });
-const secondEmojify = arrayEmojify.emojify(['100', 'coffee', 'heart', ':+1:']);
+const BoolEmojify = new BoolEmojify();
+const firstEmojify = BoolEmojify.emojify(true, (result) => {
+    /* TODO: result.value */
+});
+const secondEmojify = BoolEmojify.emojify(false); // secondEmojify.value
 ```
 
 ## API
@@ -24,15 +35,15 @@ const secondEmojify = arrayEmojify.emojify(['100', 'coffee', 'heart', ':+1:']);
 
 #### data
 
-Type: `Array` | `String`
+Type: `Boolean`
 
-Data Array for emojify.
+Data boolean value for emojify.
 
 #### cb
 
 Type: `Callback`
 
-Return emojify array in callback.
+Return boolean emojify value in callback.
 
 ## License
 

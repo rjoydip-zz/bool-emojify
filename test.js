@@ -1,102 +1,143 @@
 
-const { ArrayEmojify } = require('./');
+const { BoolEmojify } = require('./');
 
-test('ArrayEmojify with return', () => {
-    const arrayEmojify = new ArrayEmojify();
-    const emojify = arrayEmojify.emojify(['100', 'coffee', 'heart', ':+1:']);
-    if (emojify.error) {
+test('BoolEmojify with return', () => {
+    const boolEmojify = new BoolEmojify();
+    const emojifyTrue = boolEmojify.emojify(true);
+    if (emojifyTrue.error) {
         expect(() => {
-            throw new Error(emojify.error);
+            throw new Error(emojifyTrue.error);
         }).toThrow();
     } else {
-        expect(emojify.value).toEqual(['💯 ', '☕️ ', '❤️ ', '👍 ']);
+        expect(emojifyTrue.value).toEqual('👆');
+    }
+    const emojifyFalse = boolEmojify.emojify(false);
+    if (emojifyFalse.error) {
+        expect(() => {
+            throw new Error(emojifyFalse.error);
+        }).toThrow();
+    } else {
+        expect(emojifyFalse.value).toEqual('👇');
     }
 });
 
-test('ArrayEmojify with callback', () => {
-    const arrayEmojify = new ArrayEmojify();
-    arrayEmojify.emojify(['100', 'coffee', 'heart', ':+1:'], (emojify) => {
+test('BoolEmojify with callback with', () => {
+    const boolEmojify = new BoolEmojify();
+    boolEmojify.emojify(true, (emojify) => {
         if (emojify.error) {
             expect(() => {
                 throw new Error(emojify.error);
             }).toThrow();
         } else {
-            expect(emojify.value).toEqual(['💯 ', '☕️ ', '❤️ ', '👍 ']);
+            expect(emojify.value).toEqual('👆');
+        }
+    });
+    boolEmojify.emojify(false, (emojify) => {
+        if (emojify.error) {
+            expect(() => {
+                throw new Error(emojify.error);
+            }).toThrow();
+        } else {
+            expect(emojify.value).toEqual('👇');
         }
     });
 });
 
-test('ArrayEmojify with return, blank array', () => {
-    const arrayEmojify = new ArrayEmojify();
-    const emojify = arrayEmojify.emojify([]);
-    if (emojify.error) {
+test('BoolEmojify with return with blank string', () => {
+    const boolEmojify = new BoolEmojify();
+    const emojifyBlank = boolEmojify.emojify('');
+    if (emojifyBlank.error) {
         expect(() => {
-            throw new Error(emojify.error);
+            throw new Error(emojifyBlank.error);
         }).toThrow();
     } else {
-        expect(emojify.value).toEqual([]);
+        expect(emojifyBlank.value).toEqual('Data is empty');
     }
 });
 
-test('ArrayEmojify with callback, blank array', () => {
-    const arrayEmojify = new ArrayEmojify();
-    arrayEmojify.emojify([], (emojify) => {
+test('BoolEmojify with callback with blank string', () => {
+    const boolEmojify = new BoolEmojify();
+    boolEmojify.emojify('', (emojify) => {
         if (emojify.error) {
             expect(() => {
                 throw new Error(emojify.error);
             }).toThrow();
         } else {
-            expect(emojify.value).toEqual([]);
+            expect(emojify.value).toEqual('Data is empty');
         }
     });
 });
 
-test('ArrayEmojify with return, blank string', () => {
-    const arrayEmojify = new ArrayEmojify();
-    const emojify = arrayEmojify.emojify("");
-    if (emojify.error) {
-        expect(() => {
-            throw new Error(emojify.error);
-        }).toThrow();
-    } else {
-        expect(emojify.value).toEqual([]);
-    }
-});
-
-test('ArrayEmojify with callback, blank string', () => {
-    const arrayEmojify = new ArrayEmojify();
-    arrayEmojify.emojify("", (emojify) => {
+test('BoolEmojify with callback with blank array', () => {
+    const boolEmojify = new BoolEmojify();
+    boolEmojify.emojify([], (emojify) => {
         if (emojify.error) {
             expect(() => {
                 throw new Error(emojify.error);
             }).toThrow();
         } else {
-            expect(emojify.value).toEqual([]);
+            expect(emojify.value).toEqual('Data is not boolean type');
         }
     });
 });
 
-test('ArrayEmojify with return, valid string', () => {
-    const arrayEmojify = new ArrayEmojify();
-    const emojify = arrayEmojify.emojify("coffee");
-    if (emojify.error) {
-        expect(() => {
-            throw new Error(emojify.error);
-        }).toThrow();
-    } else {
-        expect(emojify.value).toEqual('☕️');
-    }
-});
-
-test('ArrayEmojify with callback, valid string', () => {
-    const arrayEmojify = new ArrayEmojify();
-    arrayEmojify.emojify(":coffee:", (emojify) => {
+test('BoolEmojify with callback with blank array', () => {
+    const boolEmojify = new BoolEmojify();
+    boolEmojify.emojify([], (emojify) => {
         if (emojify.error) {
             expect(() => {
                 throw new Error(emojify.error);
             }).toThrow();
         } else {
-            expect(emojify.value).toEqual('☕️');
+            expect(emojify.value).toEqual('Data is not boolean type');
+        }
+    });
+});
+
+test('BoolEmojify with return with option', () => {
+    const boolEmojify = new BoolEmojify({
+        "truthy": '👍',
+        "falsy": '👎'
+    });
+    const emojifyTrue = boolEmojify.emojify(true);
+    if (emojifyTrue.error) {
+        expect(() => {
+            throw new Error(emojifyTrue.error);
+        }).toThrow();
+    } else {
+        expect(emojifyTrue.value).toEqual('👍');
+    }
+    const emojifyFalse = boolEmojify.emojify(false);
+    if (emojifyFalse.error) {
+        expect(() => {
+            throw new Error(emojifyFalse.error);
+        }).toThrow();
+    } else {
+        expect(emojifyFalse.value).toEqual('👎');
+    }
+});
+
+test('BoolEmojify with callback with option', () => {
+    const boolEmojify = new BoolEmojify({
+        "truthy": '👍',
+        "falsy": '👎'
+    });
+    boolEmojify.emojify(true, (emojify) => {
+        if (emojify.error) {
+            expect(() => {
+                throw new Error(emojify.error);
+            }).toThrow();
+        } else {
+            expect(emojify.value).toEqual('👍');
+        }
+    });
+    boolEmojify.emojify(false, (emojify) => {
+        if (emojify.error) {
+            expect(() => {
+                throw new Error(emojify.error);
+            }).toThrow();
+        } else {
+            expect(emojify.value).toEqual('👎');
         }
     });
 });
