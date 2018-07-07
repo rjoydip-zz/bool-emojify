@@ -1,6 +1,6 @@
 {
   "name": "bool-emojify",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Emojify Boolean values",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,11 @@
     "bool-emojify",
     "boolean-emojify"
   ],
-  "author": "Joydip Roy (rjoydip)",
+  "repository": "rjoydip/bool-emojify",
+  "author": {
+    "name": "Joydip Roy",
+    "email": "joydipand@gmail.com"
+  },
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
